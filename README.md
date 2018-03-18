@@ -141,6 +141,8 @@ We loop over a list named `pairs`. Where is that list, and how did the template 
 {% endfor %}
 ```
 
+The double curly braces will be filled differently each time the loop repeats.
+
 What we're aiming for is a list of 45 presidents in which each line looks like this:
 
 ```html
@@ -188,7 +190,10 @@ for president in presidents_list:
     name_list.append(president['President'])
 ```
 
-If you're asking why `president['Presidency']` and `president['President']` instead of `presidents_list[0]['Presidency']` and `presidents_list[0]['President']`, you need to think about what the loop does. It take each president's dictionary one by one, as `president`, from the list (`presidents_list`).
+If you're asking:
+   * Why `president['Presidency']` and `president['President']`
+   * instead of `presidents_list[0]['Presidency']` and `presidents_list[0]['President']`,
+you need to think about what the loop does. It take each president's dictionary one by one, as `president`, from the list (`presidents_list`).
 
 Now we have all the data we need for the directory page, but the *index.html* template must receive a list of pairs: `[(number, name),(number, name), ...]`
 
@@ -198,7 +203,7 @@ Here's how we make that list of pairs from two lists:
 pairs_list = zip(ids_list, name_list)
 ```
 
-Because our CSV lists the presidents in order by their presidency, and we made a *list* of dictionaries from that CSV, we can be sure that they are in the order we want.
+Because our CSV lists the presidents in order by their presidency, and we made a *list* of dictionaries from that CSV, we can be sure that they are in the order we want, starting at 1 and ending at 45.
 
 The final route function:
 
