@@ -314,6 +314,8 @@ for president in presidents_list:
         break
 ```
 
+(Alternatively, we could use just `pres_dict = presidents_list[num]`. It would work fine for *this* data source. However, many data sources will not have such a handy correlation between a unique ID number and the list order, and a goal here is to make code that's easy to adapt.)
+
 Your new route now looks like this:
 
 ```python
@@ -348,7 +350,7 @@ We must be fussy about the paths we write into Flask template files, or the URLs
 * To the image file for a given president: `src="{{ url_for('static', filename='images/'+pres['Image']) }}"` (in *president.html*)
 * To the Wikipedia page for a given president: `href="{{ pres['Wikipedia-entry'] }}"` (in *president.html*)
 
-This list reveals one remaining problem we have not solved: The links in *index.html* are going to break on a live server if we do not use the Flask/Jinja2 function `url_for()` &mdash; this is necessary for ALL links that lead anywhere **inside** the Flask app. Only the Wikipedia link is exempt, as it leads to an external site.
+**This list reveals one remaining problem we have not solved:** The links in *index.html* are going to break on a live server if we do not use the Flask/Jinja2 function `url_for()` &mdash; this is necessary for ALL links that lead anywhere **inside** the Flask app. Only the Wikipedia link is exempt, as it leads to an external site.
 
 Open the *index.html* template file and change this:
 
@@ -372,8 +374,8 @@ That's the trick! It is NOT based on the `@app.route()` line but rather on the *
 
 ## Conclusion
 
-In this exercise, you used a CSV file to create detail pages for each of the 45 United States presidents, as well as a directory page listing all the presidents are linking to the detail pages.
+In this exercise, you used a CSV file to create detail pages for each of the 45 United States presidents, as well as a directory page listing all the presidents and linking to the detail pages.
 
 It is also possible to use other data sources to generate pages with Flask, including various SQL and NoSQL databases ([see the docs](http://flask.pocoo.org/docs/0.12/patterns/)).
 
-This CSV method is quite handy for smaller apps, as CSVs are easy for most people to work with.
+This CSV method is quite handy for smaller apps, as CSV files are easy for most people to work with and can be exported from any spreadsheet application.
