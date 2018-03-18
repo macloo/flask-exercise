@@ -2,12 +2,23 @@
 
 {% block content %}
 
-	<h1>{{ name }}</h1>
+	<!-- pres - is the full dict for a president, sent here by the route -->
 
-	<img class="right" src="{{ portrait }}" alt="President portrait">
+	<h1>{{ pres['President'] }}</h1>
 
-	<p></p>
+	<!-- NOTE the pattern for pointing to a file inside the static folder -->
+	<img class="right" src="{{ url_for('static', filename='images/'+pres['Image']) }}" alt="President portrait">
 
+
+	<!-- REPLACE the brackets below with the correct placeholder to fill in the
+		 data required. Refer to presidents.csv for column headings -->
+
+	<p>[president's name] was born on [date], in [place]. He was [age] when he took office on [date]. He was a member of the [party] Party. He left office on [date]. His occupation before the presidency: [occupation]. His college: [college]. He died in [place] on [date].</p>
+
+
+	<p><a href="{{ pres['Wikipedia-entry'] }}">View Wikipedia entry for {{ pres['President'] }}.</a></p>
+
+	<!-- NOTE the way to link to a route: Use the function name -->
 	<p><a href="{{ url_for('index') }}">Return to the list</a> to select a different president.</p>
 
 {% endblock %}

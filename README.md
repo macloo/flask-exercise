@@ -89,7 +89,7 @@ In your web browser, type `localhost:5000/` in the address bar to launch the Fla
 
 If your browser displayed "Welcome to the presidential Flask example!" and "George Washington, born in Westmoreland County, Virginia." &mdash; you have verified that you can access `presidents_list` from a route function. Review the function above to ensure you understand how it worked, because we're about to change it further.
 
-## Create a directory page to generate detail pages
+## Create a directory page (a list of links)
 
 In our app, there will be two page types:
 
@@ -193,6 +193,7 @@ for president in presidents_list:
 If you're asking:
    * Why `president['Presidency']` and `president['President']`
    * instead of `presidents_list[0]['Presidency']` and `presidents_list[0]['President']`,
+
 you need to think about what the loop does. It take each president's dictionary one by one, as `president`, from the list (`presidents_list`).
 
 Now we have all the data we need for the directory page, but the *index.html* template must receive a list of pairs: `[(number, name),(number, name), ...]`
@@ -274,3 +275,105 @@ A final note about template files, for now, is that the double curly braces cont
     <li><a href="/president/{{ pair[0] }}">{{ pair[1] }}</a></li>
 {% endfor %}
 ```
+
+## Create a detail page
+
+As already noted, our app will have two page types:
+
+* A directory page listing all presidents by name, in the order of their presidency. We've finished that one.
+* The detail page. This will have the same layout and information for each president.
+
+We don't have a route or function for the detail page yet. Let's review what we needed for our *first* route and function:
+
+* Its route is `'/'`
+* Its function is `index()`
+* It uses the template file *index.html*
+
+To create the detail pages, we must have a new route. The request to the web server must **match** the links we set up in our link list in the *index.html* template, because those links are what will open each detail page. Those links will look like this:
+
+```html
+<li><a href="/president/1">George Washington</a></li>
+```
+
+Therefore, the server request must be `/president/` followed by a number, which will be *different for each president.* Here's how we handle that in the route and function:
+
+```python
+@app.route('/president/<num>')
+def detail(num):
+    return render_template('president.html', pres=pres_dict, the_title=pres_dict['President'])
+```
+
+Insert that new route and function in *presidents.py*, below the first route and function.
+
+The function `detail()` will take the number from the server request (sent when the user clicks a link on our directory page) as an argument, which we can use in the function to find the entire dictionary for that president:
+
+```python
+for president in presidents_list:
+    if president['Presidency'] == num:
+        pres_dict = president
+        break
+```
+
+Your new route now looks like this:
+
+```python
+@app.route('/president/<num>')
+def detail(num):
+    for president in presidents_list:
+        if president['Presidency'] == num:
+            pres_dict = president
+            break
+    return render_template('president.html', pres=pres_dict, the_title=pres_dict['President'])
+```
+
+Now we have `pres_dict`, which is all we need to fill in lots of details on the detail page.
+
+### The detail page template
+
+The `detail()` function passes information to the *president.html* file in the *templates folder*. Open it, and you'll see that it uses the same *base.html* template used by our other page.
+
+Note that both routes fill in the TITLE element in the HEAD in the same manner, and that this is in the *base.html* template.
+
+There are 15 columns in the CSV file, so we have 15 details about each president. You can use these details in any format you like &mdash; a paragraph, a list, etc. Refer to the CSV for the exact **key** text to use in the template. The image and the Wikipedia link have already been coded into the template, along with an H1 element.
+
+You may save *president.py* and run it before editing *president.html* &mdash; it will work without the additional details.
+
+## Relationships between routes, and templates, and links
+
+We must be fussy about the paths we write into Flask template files, or the URLs will not work. Here is a list of every URL or path in this exercise:
+
+* To the CSS file: `href="{{ url_for('static', filename='css/main.css') }}"` (in *base.html*)
+* To each detail page: `href="/president/{{ pair[0] }}"` (in *index.html*)
+* To the directory page: `href="{{ url_for('index') }}"` (in *president.html*)
+* To the image file for a given president: `src="{{ url_for('static', filename='images/'+pres['Image']) }}"` (in *president.html*)
+* To the Wikipedia page for a given president: `href="{{ pres['Wikipedia-entry'] }}"` (in *president.html*)
+
+This list reveals one remaining problem we have not solved: The links in *index.html* are going to break on a live server if we do not use the Flask/Jinja2 function `url_for()` &mdash; this is necessary for ALL links that lead anywhere **inside** the Flask app. Only the Wikipedia link is exempt, as it leads to an external site.
+
+Open the *index.html* template file and change this:
+
+```html+jinja
+<li><a href="/president/{{ pair[0] }}">{{ pair[1] }}</a></li>
+```
+
+To this:
+
+```html+jinja
+<li><a href="{{ url_for( 'detail', num=pair[0] ) }}">{{ pair[1] }}</a></li>
+```
+
+It's quite tricky when you're not used to it! **Note how the terms correlate to the function:**
+
+```python
+def detail(num):
+```
+
+That's the trick! It is NOT based on the `@app.route()` line but rather on the *definition of the route function.*
+
+## Conclusion
+
+In this exercise, you used a CSV file to create detail pages for each of the 45 United States presidents, as well as a directory page listing all the presidents are linking to the detail pages.
+
+It is also possible to use other data sources to generate pages with Flask, including various SQL and NoSQL databases ([see the docs](http://flask.pocoo.org/docs/0.12/patterns/)).
+
+This CSV method is quite handy for smaller apps, as CSVs are easy for most people to work with.

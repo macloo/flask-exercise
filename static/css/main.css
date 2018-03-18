@@ -13,6 +13,7 @@ body {
     max-width: 740px;
     padding: 2em 4em;
     background: #fff;
+    overflow: auto;
 }
 
 h1 {
@@ -35,8 +36,8 @@ img {
 
 .right {
     float: right;
-    margin: 0 1em 1em 0;
-    border: 1px solid #ccc;
+    margin: 0 0 1em 1em;
+    border: 1px solid #333;
 }
 
 
@@ -64,6 +65,10 @@ a:hover {
         padding: 2em;
     }
     h1 {
-        padding: 0;
+        padding: 0 0 0.3em 0;
+    }
+    .right {
+        float: none;
+        margin: 0;
     }
 }
