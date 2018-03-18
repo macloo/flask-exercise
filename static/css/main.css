@@ -4,7 +4,7 @@ body {
     font-family: 'Verdana', sans-serif;
     font-size: 100%;
     color: #000;
-    background: #ccc;
+    background: #238989;
     margin: 0;
 }
 
@@ -15,19 +15,16 @@ body {
     background: #fff;
 }
 
-h1, h2 {
+h1 {
     font-family: 'Georgia', serif;
     font-size: 3em;
     margin: 0;
-    padding-bottom: 1em;
-}
-
-h2 {
-    font-size: 2em;
+    padding: 0.5em 0;
 }
 
 p, li {
     font-size: 1.4em;
+    line-height: 1.5em;
 }
 
 img {
@@ -46,7 +43,7 @@ img {
 /* links */
 
 a {
-    color: #00c;
+    color: #009;
     text-decoration: none;
 }
 
@@ -65,5 +62,8 @@ a:hover {
         margin: 0;
         width: 100%;
         padding: 2em;
+    }
+    h1 {
+        padding: 0;
     }
 }
