@@ -131,7 +131,7 @@ The UL element contains Jinja2 templating directives:
 {% endfor %}
 ```
 
-Those two directives are the start and end of a Python for-loop. If this reminds you of PHP (written inside HTML) &mdash; yes, it's the same idea. Flask allows us to insert Jinja2 directives to run Python commands in a template file.
+Those two directives are the start and end of a Python for-loop. If this reminds you of PHP (written inside HTML) &mdash; yes, it's the same idea. Flask allows us to insert Jinja2 directives to run Python commands in a template file. (For other Jinja2 directives, [read the docs](http://jinja.pocoo.org/docs/2.10/templates/).)
 
 We loop over a list named `pairs`. Where is that list, and how did the template get access to it? We passed it to this template with `return render_template()`, covered above. We haven't yet written the code that creates `pairs_list`, but when we look at this for-loop, we can see what the list must contain:
 
@@ -204,7 +204,7 @@ Here's how we make that list of pairs from two lists:
 pairs_list = zip(ids_list, name_list)
 ```
 
-Because our CSV lists the presidents in order by their presidency, and we made a *list* of dictionaries from that CSV, we can be sure that they are in the order we want, starting at 1 and ending at 45.
+Because our CSV lists the presidents in order by their presidency, and we made a *list* of dictionaries from that CSV, we can be sure that they are in the order we want, starting at 1 and ending at 45. If we needed to sort them, numerically or alphabetically, we would add another line of code here to do so.
 
 The final route function:
 
@@ -314,7 +314,7 @@ for president in presidents_list:
         break
 ```
 
-(Alternatively, we could use just `pres_dict = presidents_list[num]`. It would work fine for *this* data source. However, many data sources will not have such a handy correlation between a unique ID number and the list order, and a goal here is to make code that's easy to adapt.)
+(Alternatively, we could use just `pres_dict = presidents_list[int(num)-1]`. It would work fine for *this* data source. However, many data sources will not have such a handy correlation between a unique ID number and the list order, and a goal here is to make code that's easy to adapt.)
 
 Your new route now looks like this:
 
