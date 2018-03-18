@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>A presidential Flask example</h1>
+
+<p>Click any president's name.</p>
+
+<!-- name_list must be sent here by a route function -->
+
+    <ul>
+    {% for item in name_list %}
+        <li><a href="{{ url_for( 'president', idnum=item[0] ) }}">{{ item[1] }}</a></li>
+    {% endfor %}
+    </ul>
+
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+	<h1>{{ name }}</h1>
+
+	<img class="right" src="{{ portrait }}" alt="President portrait">
+
+	<p></p>
+
+	<p><a href="{{ url_for('index') }}">Return to the list</a> to select a different president.</p>
+
+{% endblock %}
