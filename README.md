@@ -10,6 +10,19 @@ Three Flask template files are in the *templates* folder, also required for a Fl
 
 **NOTE:** It is assumed you are in a Python 3.6 virtual environment which has been activated and in which Flask has been installed.
 
+## Contents
+
+* [Convert a CSV file to a dictionary](#convert-a-csv-file-to-a-dictionary)
+* [Test the dictionary list in a Flask route](#test-the-dictionary-list-in-a-flask-route)
+* [Create a directory page (a list of links)](#create-a-directory-page-a-list-of-links)
+   * [Examine the first template](#examine-the-first-template)
+   * [Get the data needed for the directory page](#get-the-data-needed-for-the-directory-page)
+   * [Revisit the first template](#revisit-the-first-template)
+* [Create a detail page](#create-a-detail-page)
+   * [The detail page template](#the-detail-page-template)
+* [Relationships between routes, and templates, and links](#relationships-between-routes-and-templates-and-links)
+* [Conclusion](#conclusion)
+
 ## Convert a CSV file to a dictionary
 
 Our first task is to convert the CSV to a Python dictionary (or more accurately, a list of dictionaries).
