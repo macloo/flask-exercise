@@ -392,3 +392,5 @@ In this exercise, you used a CSV file to create detail pages for each of the 45 
 It is also possible to use other data sources to generate pages with Flask, including various SQL and NoSQL databases ([see the docs](http://flask.pocoo.org/docs/0.12/patterns/)).
 
 This CSV method is quite handy for smaller apps, as CSV files are easy for most people to work with and can be exported from any spreadsheet application.
+
+The completed app is fully contained in the folder *final_app* in this repo. You can run *presidents.py* in that folder to see the final result.
