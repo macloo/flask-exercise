@@ -2,9 +2,13 @@
 
 In this exercise, we will work with a CSV file as our data source to create individual pages for each of the 45 United States presidents. The CSV file is provided for you: *presidents.csv* (Open it above.)
 
-**DOWNLOAD THE ZIPPED VERSION OF THIS REPO to follow along in class.**
+**1. DOWNLOAD THE ZIPPED VERSION OF THIS REPO to follow along in class.**
 
-Our Flask app file is: *presidents.py* (Open it in Atom.)
+**2. UNZIP it and drag the folder flask-exercise-master into the folder that contains your virtualenv for Flask projects.**
+
+**3. ACTIVATE your virtualenv.**
+
+**4.** Our Flask app file is: *presidents.py* **Open it in Atom.**
 
 A completed CSS file and 45 images have been provided in the *static* folder, which is where all such files (and JS files as well) must be for a Flask app to use them.
 
@@ -58,7 +62,7 @@ def convert_to_dict(filename):
 
 Instead of copying this function into our Flask app file, *presidents.py*, we will **import** it there.
 
-**ACTION 1: Add this on line 2 in presidents.py:**
+**ACTION 1: Add this on line 2** in *presidents.py*:
 
 ```python
 from modules import convert_to_dict
@@ -66,7 +70,7 @@ from modules import convert_to_dict
 
 Note that now you can run `convert_to_dict()` by entering *any* CSV filename as the argument. The function returns a list of dictionaries. With *presidents.csv* as the argument, the function returns a list of 45 dictionaries.
 
-**ACTION 2: Add this on line 5 in presidents.py ** *above* the route:**
+**ACTION 2: Add this on line 5** in *presidents.py* ABOVE the route:
 
 ```python
 presidents_list = convert_to_dict("presidents.csv")
@@ -84,7 +88,7 @@ def index():
     return '<h1>Welcome to the presidential Flask example!</h1>'
 ```
 
-**ACTION 3: In presidents.py, change the route function `index()` to:**
+**ACTION 3:** In *presidents.py,* change the route function `index()` to:
 
 ```python
 def index():
