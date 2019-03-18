@@ -112,16 +112,18 @@ In your web browser, type `localhost:5000/` in the address bar to launch the Fla
 
 If your browser displayed "Welcome to the presidential Flask example!" and "George Washington, born in Westmoreland County, Virginia." &mdash; you have verified that you can access `presidents_list` from a route function. Review the function above to ensure you understand how it worked, because we're about to change it further.
 
+You can view the CSV file (`presidents.csv`) as a lovely table here on GitHub.
+
 ## Create a directory page (a list of links)
 
 In our app, there will be two page types:
 
-* First, a directory page listing all presidents by name, in the order of their presidency. Each name will be a link that opens a president's detail page.
-* Second, the detail page. This will have the same layout and information for each president.
+* First, a **directory page** or index, listing all presidents by name, in the order of their presidency. Each name will be a link that opens a president's detail page.
+* Second, the **detail page.** This will have the same layout and information for each president.
 
-We will change the existing Flask route to create the directory page.
+We will change the existing Flask route (`index()`) to create the directory page.
 
-Our first change is to add a **template** to the function. We already import `render_template` at the top of our app script, so all that's needed is to change the return statement, which currently reads:
+**ACTION 5:** Our first change is to add a **template** to the `index()` function. We already import `render_template` at the top of our app script, so all that's needed is to change the return statement, which currently reads:
 
 ```python
 return heading + test1 + test2
@@ -133,7 +135,7 @@ To this:
 return render_template('index.html', pairs=pairs_list, the_title="Presidents Index")
 ```
 
-This means that instead of writing the variables `heading`, `test1` and `test2` directly into the browser window, Flask will get a template file named *index.html* and write its contents into the browser window. The `render_template` function here passes two variables to the template: `pairs_list` and `the_title`. We have not created `pairs_list` yet.
+**How it works:** Now, instead of writing the variables `heading`, `test1` and `test2` directly into the browser window, Flask will get a template file named *index.html* and write *its contents* into the browser window. The `render_template` function here passes two variables to the template: `pairs` and `the_title`. We have not created `pairs_list` yet.
 
 ### Examine the first template
 
