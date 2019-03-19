@@ -102,17 +102,17 @@ We know that `listname[0]` will return the value of the **first item** in a Pyth
 
 To access any item inside a dictionary, we use its **key**. Our keys in `presidents_list` include `'President'` and `'Birthplace'`. We **cannot** access the dictionary with `presidents_list['President']` because &mdash; remember &mdash; `presidents_list` is a LIST. So we access one item in the list and *then* the key inside that item: `presidents_list[0]['President']`.
 
-**ACTION 4:** Save the edited *presidents.py* file and run it in Terminal with (first, make sure your virtualenv is *activated*):
+**ACTION 4:** Save the edited *presidents.py* file and run it in Terminal (first, make sure your virtualenv is *activated*):
 
 ```python
 python presidents.py
 ```
 
-In your web browser, type `localhost:5000/` in the address bar to launch the Flask web server and view the result of route `'/'`.
+In your web browser, type `localhost:5000/` in the address bar to launch the Flask web server &mdash; you will see the result of `@app.route('/')` (which is the function `index()`).
 
 If your browser displayed "Welcome to the presidential Flask example!" and "George Washington, born in Westmoreland County, Virginia." &mdash; you have verified that you can access `presidents_list` from a route function. Review the function above to ensure you understand how it worked, because we're about to change it further.
 
-You can view the CSV file (`presidents.csv`) as a lovely table here on GitHub.
+You can view the CSV file (`presidents.csv`) as a lovely table here on GitHub and see all the presidential facts that are available to us.
 
 ## Create a directory page (a list of links)
 
@@ -123,7 +123,7 @@ In our app, there will be two page types:
 
 We will change the existing Flask route (`index()`) to create the directory page.
 
-**ACTION 5:** Our first change is to add a **template** to the `index()` function. We already import `render_template` at the top of our app script, so all that's needed is to change the return statement, which currently reads:
+**ACTION 5:** Our first change is to add a **template** to the `index()` function. We already import `render_template` at the top of our app script, so all that's needed is to **change the return statement,** which currently reads:
 
 ```python
 return heading + test1 + test2
@@ -135,7 +135,9 @@ To this:
 return render_template('index.html', pairs=pairs_list, the_title="Presidents Index")
 ```
 
-**How it works:** Now, instead of writing the variables `heading`, `test1` and `test2` directly into the browser window, Flask will get a template file named *index.html* and write *its contents* into the browser window. The `render_template` function here passes two variables to the template: `pairs` and `the_title`. We have not created `pairs_list` yet.
+**How it works:** Now, instead of writing the variables `heading`, `test1` and `test2` directly into the browser window, Flask will get a template file named *index.html* and write *its contents* into the browser window. The `render_template` function here passes two **variables** to the template: `pairs` and `the_title`.
+
+We have not created `pairs_list` in *presidents.py* yet, so we can't run this yet. It would throw an error ("NameError: name 'pairs_list' is not defined").
 
 ### Examine the first template
 
@@ -158,7 +160,7 @@ The UL element contains Jinja2 templating directives:
 
 Those two directives are the start and end of a Python for-loop. If this reminds you of PHP (written inside HTML) &mdash; yes, it's the same idea. Flask allows us to insert Jinja2 directives to run Python commands in a template file. (For other Jinja2 directives, [read the docs](http://jinja.pocoo.org/docs/2.10/templates/).)
 
-We loop over a list named `pairs`. Where is that list, and how did the template get access to it? We passed it to this template with `return render_template()`, covered above. We haven't yet written the code that creates `pairs_list`, but when we look at this for-loop, we can see what the list must contain:
+**We will loop over** a list named `pairs`. Where is that list, and how did the template get access to it? We passed it to this template with `return render_template()`, covered above. We haven't yet written the code that creates `pairs_list`, but when we look at this for-loop, we can see **what the list must contain:**
 
 ```html+jinja
 {% for pair in pairs %}
@@ -174,13 +176,13 @@ What we're aiming for is a list of 45 presidents in which each line looks like t
 <li><a href="/president/1">George Washington</a></li>
 ```
 
-Each pair in the list needs to provide, first, the number of the presidency, and second, the full name of the president.
+Each **pair** in the **list** needs to provide, first, the *number* of the presidency, and second, the *full name* of the president.
 
-Let's return to the app file and write that into the route.
+Let's return to the app file and write that into the route function.
 
 ### Get the data needed for the directory page
 
-In the route function in *presidents.py*, delete old code so that you're left with this:
+**ACTION 6:** In *presidents.py*, in the route function, **delete** old code so that you're left with only this:
 
 ```python
 @app.route('/')
@@ -193,7 +195,7 @@ def index():
 
 **Do not delete anything above or below the route function!**
 
-We know we need two items of information for each president: the number of the presidency, and the full name of the president. Earlier, we got the name of the first president with `presidents_list[0]['President']`. We got his birthplace with `presidents_list[0]['Birthplace']`. We don't need his birthplace now, but we need to know which **key** to use to get the number of his presidency.
+We know we need two items (a pair!) of information for each president: the *number* of the presidency, and the *full name* of the president. Earlier, we got the name of the first president with `presidents_list[0]['President']`. We got his birthplace with `presidents_list[0]['Birthplace']`. We don't need his birthplace now, but we need to know which **key** to use to get the number of his presidency.
 
 Look at the CSV file and see if you can find it.
 
@@ -201,9 +203,9 @@ Look at the CSV file and see if you can find it.
 .<br>
 .
 
-It's the first column, labeled "Presidency," so the **key** in the dictionary will be `['Presidency']`.
+It's the first column, labeled "Presidency," so the **key** in the dictionary will be `['Presidency']`. Case-sensitive!!
 
-We need to get all the numbers and names for all the presidents. Let's use a loop. Let's put all the numbers in one list, `ids_list`, and all the names in another list, `name_list`.
+We need to get all the numbers and names for all the presidents. **Let's use a loop.** Let's put all the numbers in one list, `ids_list`, and all the names in another list, `name_list`.
 
 ```python
 ids_list = []
@@ -215,11 +217,16 @@ for president in presidents_list:
     name_list.append(president['President'])
 ```
 
+**WHERE does it go?** Immediately after the line `def index():` and ABOVE the `return` statement.
+
+**ACTION 7:** Put the previous code into the correct place in *presidents.py*.
+
 If you're asking:
+
    * Why `president['Presidency']` and `president['President']`
    * instead of `presidents_list[0]['Presidency']` and `presidents_list[0]['President']`,
 
-you need to think about what the loop does. It take each president's dictionary one by one, as `president`, from the list (`presidents_list`).
+... you need to think about **what the loop does.** It take each president's dictionary ONE by ONE, as `president`, from the list (`presidents_list`).
 
 Now we have all the data we need for the directory page, but the *index.html* template must receive a list of pairs: `[(number, name),(number, name), ...]`
 
