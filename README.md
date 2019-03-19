@@ -385,6 +385,10 @@ def detail(num):
 
 Now we have a completed `pres_dict`, which is all we need to pass to the *president.html* template &mdash; it contains *the entire dictionary* for ONE president. That's the same as one complete row from the CSV.
 
+**Check your indents carefully,** and SAVE *presidents.py*.
+
+<img src="README_images/route2.png" alt="Code screenshot" width=620>
+
 ### The detail page template
 
 The `detail()` function passes information to the *president.html* file in the *templates folder*. Open it, and you'll see that it uses the same *base.html* template used by our other page.
