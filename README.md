@@ -221,16 +221,18 @@ for president in presidents_list:
 
 **ACTION 7:** Put the previous code into the correct place in *presidents.py*.
 
-<img src="README_images/route1.png" alt="Code screenshot" style="width: 630px;">
+<img src="README_images/route1.png" alt="Code screenshot" width=630>
 
 If you're asking:
 
-   * Why `president['Presidency']` and `president['President']`
-   * instead of `presidents_list[0]['Presidency']` and `presidents_list[0]['President']`,
+   * Why `president['Presidency']` and `president['President']` &mdash;
+   * instead of `presidents_list[0]['Presidency']` and `presidents_list[0]['President']`?
 
 ... you need to think about **what the loop does.** It take each president's dictionary ONE by ONE, as `president`, from the list (`presidents_list`).
 
-Now we have all the data we need for the directory page, but the *index.html* template must receive a list of pairs: `[(number, name),(number, name), ...]`
+Previously, we had no loop. We had to specify *which* president (list item 0). Now we don't, because we are looping over the *entire list.*
+
+Now we have all the data we need for the directory page, but the *index.html* template must receive a list of pairs: `[(number, name),(number, name), ...]`. That will be our `pairs_list`.
 
 Here's how we make that list of pairs from two lists:
 
@@ -238,7 +240,9 @@ Here's how we make that list of pairs from two lists:
 pairs_list = zip(ids_list, name_list)
 ```
 
-Because our CSV lists the presidents in order by their presidency, and we made a *list* of dictionaries from that CSV, we can be sure that they are in the order we want, starting at 1 and ending at 45. If we needed to sort them, numerically or alphabetically, we would add another line of code here to do so.
+**ACTION 8:** ADD that one line ABOVE the `return` statement.
+
+Because our CSV lists the presidents in order by their presidency, and we made a *list* of dictionaries from that CSV, we can be sure that they are in the order we want, starting at 1 and ending at 45. (If we needed to *sort* them, numerically or alphabetically, we would add another line of code here to do so.)
 
 The final route function:
 
@@ -252,9 +256,11 @@ def index():
     for president in presidents_list:
         ids_list.append(president['Presidency'])
         name_list.append(president['President'])
-        # zip() is a built-in function that combines lists
-        # creating a new list of tuples
+
+    # zip() is a built-in function that combines lists
+    # creating a new list of tuples
     pairs_list = zip(ids_list, name_list)
+
     return render_template('index.html', pairs=pairs_list, the_title="Presidents Index")
 ```
 
