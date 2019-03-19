@@ -234,7 +234,7 @@ Previously, we had no loop. We had to specify *which* president (list item 0). N
 
 Now we have all the data we need for the directory page, but the *index.html* template must receive a list of pairs: `[(number, name),(number, name), ...]`. That will be our `pairs_list`.
 
-Here's how we make that list of pairs from two lists:
+Here's how we make that ONE list of pairs from TWO lists (Python's built-in `zip()` function):
 
 ```python
 pairs_list = zip(ids_list, name_list)
@@ -264,30 +264,33 @@ def index():
     return render_template('index.html', pairs=pairs_list, the_title="Presidents Index")
 ```
 
-Save the edited *presidents.py* file and run it in Terminal with:
+**ACTION 9:** SAVE the edited *presidents.py* file and RUN IT in Terminal with:
 
 ```python
 python presidents.py
 ```
 
-Or, if the server is still active in Terminal, just reload the window you opened earlier.
+Or, if the server is still active in Terminal, just RELOAD the window you opened earlier.
+
+**NOTE:** It is essential that you name the list `pairs_list`, because that's what the `return` statement specifically says will be passed to the template variable `pairs`.
 
 ### Revisit the first template
 
-Although it's fairly plain, our directory page does have some styles applied. It also has a title (visible in the browser tab). Open *index.html* in the *templates* folder and let's see how that got done.
+Although it's fairly plain, our directory page does have some CSS styles applied. It also has a title (visible in the browser tab). Open *index.html* in the *templates* folder and let's see how that got done.
 
 ```html+jinja
 {% extends 'base.html' %}
 
 {% block content %}
+...
 {% endblock %}
 ```
 
 More Jinja2 directives! The first one tells Flask that *index.html* extends another template file, named *base.html*. The second and third directives surround the HTML content that is **inserted into** the HTML in *base.html*.
 
-Open *base.html*. This is where we find the HEAD element, with the CSS file link, and the TITLE element. Note that the TITLE element is filled dynamically. How was the correct text inserted here?
+Open *base.html*. This is where we find the HEAD element, with the CSS file link, and the TITLE element. Note that the TITLE element is filled dynamically. **Question:** How was the correct text inserted here?
 
-We sent the text to *base.html* via *index.html* with `return render_template()` in the route function in *presidents.py*:
+**Answer:** We sent the TITLE text to *base.html* via *index.html* with `return render_template()` in the route function in *presidents.py*:
 
 ```python
 return render_template('index.html', pairs=pairs_list, the_title="Presidents Index")
@@ -299,16 +302,16 @@ Note carefully the way it is formatted in *base.html*:
 <title>{{ the_title }}</title>
 ```
 
-Another thing to note in *base.html* is that these two directives exactly match those in *index.html*:
+Another thing to note in *base.html* is that these two directives EXACTLY match those in *index.html*:
 
 ```html+jinja
 {% block content %}
 {% endblock %}
 ```
 
-You could set up multiple blocks, in which case additional blocks would need to be labeled something other than *content*.
+You could set up multiple blocks, in which case *additional* blocks would need to be labeled something *other than* **content.**
 
-A final note about template files, for now, is that the double curly braces contain a placeholder that will be replaced by text, as we saw in *index.html*:
+A final note about template files, for now, is that the double curly braces contain a placeholder that will be REPLACED by text, as we saw in *index.html*:
 
 ```html+jinja
 {% for pair in pairs %}
