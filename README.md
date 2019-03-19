@@ -411,7 +411,7 @@ We must be fussy and *precise* about the **paths** we write into Flask template 
 
 **This list reveals one remaining problem we have not solved:** The links in *index.html* are going to **break** on a live server if we do not use the Flask/Jinja2 function `url_for()` &mdash; this is necessary for ALL links that lead anywhere **inside** the Flask app. ONLY the Wikipedia link is exempt, as it leads to an *external* site.
 
-Open the *index.html* template file and change this:
+**ACTION 13:** Open the *index.html* template file and change this:
 
 ```html+jinja
 <li><a href="/president/{{ pair[0] }}">{{ pair[1] }}</a></li>
@@ -430,6 +430,8 @@ def detail(num):
 ```
 
 That's the trick! It is NOT based on the `@app.route()` line but rather on the *definition of the route function.*
+
+**ACTION 14:** SAVE and RELOAD in the browser. Check to make sure you can still open presidents' pages. If you get a `TemplateSyntaxError` in the browser, you've got an error in that HREF in the *index.html* template. In fact, any `jinja2.exceptions` error will be fixable there.
 
 ## Conclusion
 
