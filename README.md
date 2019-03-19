@@ -391,25 +391,25 @@ Now we have a completed `pres_dict`, which is all we need to pass to the *presid
 
 ### The detail page template
 
-The `detail()` function passes information to the *president.html* file in the *templates folder*. Open it, and you'll see that it uses the same *base.html* template used by our other page.
+The new `detail()` function passes information to the *president.html* template file in the *templates folder*. Open that file, and you'll see that it uses the same *base.html* template used by our other template, *index.html*.
 
 Note that both routes fill in the TITLE element in the HEAD in the same manner, and that this is in the *base.html* template.
 
-There are 15 columns in the CSV file, so we have 15 details about each president. You can use these details in any format you like &mdash; a paragraph, a list, etc. Refer to the CSV for the exact **key** text to use in the template. The image and the Wikipedia link have already been coded into the template, along with an H1 element.
+There are 15 columns in the CSV file, so we have 15 details about each president. You can use these details in any format you like &mdash; a paragraph, a list, etc. Refer to the CSV for the EXACT **key** text to use in the template. **The image and the Wikipedia link have already been coded into the template, along with an H1 element.**
 
-You may save *president.py* and run it before editing *president.html* &mdash; it will work without the additional details.
+**ACTION 12:** You may save *president.py* and RELOAD IT now, before editing *president.html* &mdash; the *president.html* template will work even without the additional details.
 
 ## Relationships between routes, and templates, and links
 
-We must be fussy about the paths we write into Flask template files, or the URLs will not work. Here is a list of every URL or path in this exercise:
+We must be fussy and *precise* about the **paths** we write into Flask template files, or the URLs will not work. Here is a list of every URL or path in this exercise:
 
 * To the CSS file: `href="{{ url_for('static', filename='css/main.css') }}"` (in *base.html*)
-* To each detail page: `href="/president/{{ pair[0] }}"` (in *index.html*)
+* To each detail page: `href="{{ url_for( 'detail', num=pair[0] ) }}"` (in *index.html*)
 * To the directory page: `href="{{ url_for('index') }}"` (in *president.html*)
 * To the image file for a given president: `src="{{ url_for('static', filename='images/'+pres['Image']) }}"` (in *president.html*)
 * To the Wikipedia page for a given president: `href="{{ pres['Wikipedia-entry'] }}"` (in *president.html*)
 
-**This list reveals one remaining problem we have not solved:** The links in *index.html* are going to break on a live server if we do not use the Flask/Jinja2 function `url_for()` &mdash; this is necessary for ALL links that lead anywhere **inside** the Flask app. Only the Wikipedia link is exempt, as it leads to an external site.
+**This list reveals one remaining problem we have not solved:** The links in *index.html* are going to **break** on a live server if we do not use the Flask/Jinja2 function `url_for()` &mdash; this is necessary for ALL links that lead anywhere **inside** the Flask app. ONLY the Wikipedia link is exempt, as it leads to an *external* site.
 
 Open the *index.html* template file and change this:
 
@@ -433,10 +433,12 @@ That's the trick! It is NOT based on the `@app.route()` line but rather on the *
 
 ## Conclusion
 
-In this exercise, you used a CSV file to create detail pages for each of the 45 United States presidents, as well as a directory page listing all the presidents and linking to the detail pages.
+In this exercise, you used **a normal CSV file** to create detail pages for each of the 45 United States presidents, as well as a directory page listing all the presidents and linking to all the detail pages.
 
-It is also possible to use other data sources to generate pages with Flask, including various SQL and NoSQL databases ([see the docs](http://flask.pocoo.org/docs/0.12/patterns/)).
+It is also possible to use other data sources to generate pages with Flask, including various SQL and NoSQL databases ([see the docs](http://flask.pocoo.org/docs/1.0/patterns/)).
 
 This CSV method is quite handy for smaller apps, as CSV files are easy for most people to work with and can be exported from any spreadsheet application.
 
-The completed app is fully contained in the folder *final_app* in this repo. You can run *presidents.py* in that folder to see the final result.
+The completed app is fully contained in the folder *final_app* in this repo. You can run *presidents.py* in that folder to see the final result, or just [view live version here](https://weimergeeks.com/flask_pres/).
+
+.
