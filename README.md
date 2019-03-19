@@ -221,6 +221,8 @@ for president in presidents_list:
 
 **ACTION 7:** Put the previous code into the correct place in *presidents.py*.
 
+<img src="README_images/route1.png" alt="Code screenshot" style="width: 630px;">
+
 If you're asking:
 
    * Why `president['Presidency']` and `president['President']`
