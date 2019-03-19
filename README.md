@@ -319,26 +319,36 @@ A final note about template files, for now, is that the double curly braces cont
 {% endfor %}
 ```
 
+While we're there (*index.html*), note that we will need to edit that HREF value. Comment text on lines 9-16 in the file tells you what to do &mdash; but not yet. Later.
+
 ## Create a detail page
 
 As already noted, our app will have two page types:
 
-* A directory page listing all presidents by name, in the order of their presidency. We've finished that one.
-* The detail page. This will have the same layout and information for each president.
+* A **directory page** or index, listing all presidents by name, in the order of their presidency. We've finished that one.
+* The **detail page.** This will have the same layout and information for each president.
 
-We don't have a route or function for the detail page yet. Let's review what we needed for our *first* route and function:
+**We don't have a route or function for the detail page yet.** Let's review what we needed for our *first* route and function:
 
 * Its route is `'/'`
 * Its function is `index()`
 * It uses the template file *index.html*
 
-To create the detail pages, we must have a new route. The request to the web server must **match** the links we set up in our link list in the *index.html* template, because those links are what will open each detail page. Those links will look like this:
+**For a new route, we will need:**
+
+1. A new route decorator with a new path (`/` *followed by* something)
+2. A new function with a new name
+3. A second template in the *templates/* folder
+
+To create the detail pages, we must have a new route. The request to the web server must **match** the links we set up in our link list in the *index.html* template, because those links are what will open each detail page. To the browser, those links will look like this:
 
 ```html
 <li><a href="/president/1">George Washington</a></li>
 ```
 
-Therefore, the server request must be `/president/` followed by a number, which will be *different for each president.* Here's how we handle that in the route and function:
+Therefore, the server request must be `/president/` followed by a number, which will be *different for each president.*
+
+Here's how we handle that in the route and function:
 
 ```python
 @app.route('/president/<num>')
@@ -346,9 +356,9 @@ def detail(num):
     return render_template('president.html', pres=pres_dict, the_title=pres_dict['President'])
 ```
 
-Insert that new route and function in *presidents.py*, below the first route and function.
+**ACTION 10:** INSERT that new route and function in *presidents.py*, BELOW the first route and function.
 
-The function `detail()` will take the number from the server request (sent when the user clicks a link on our directory page) as an argument, which we can use in the function to find the entire dictionary for that president:
+The function `detail()` will take the number from the server request (sent when the user clicks a link on our directory page) as an *argument,* which we can use *in the function* to find the entire dictionary for that president:
 
 ```python
 for president in presidents_list:
@@ -357,7 +367,9 @@ for president in presidents_list:
         break
 ```
 
-(Alternatively, we could use just `pres_dict = presidents_list[int(num)-1]`. It would work fine for *this* data source. However, many data sources will not have such a handy correlation between a unique ID number and the list order, and a goal here is to make code that's easy to adapt.)
+**ACTION 11:** INSERT that code ABOVE the `return` statement.
+
+(Alternatively, we could use just `pres_dict = presidents_list[int(num)-1]`. It would work fine for *this* data source. However, many data sources will NOT have such a handy correlation between a unique ID number and the list order, and a goal here is to make code that's easy to adapt for other projects you might do.)
 
 Your new route now looks like this:
 
@@ -371,7 +383,7 @@ def detail(num):
     return render_template('president.html', pres=pres_dict, the_title=pres_dict['President'])
 ```
 
-Now we have `pres_dict`, which is all we need to fill in lots of details on the detail page.
+Now we have a completed `pres_dict`, which is all we need to pass to the *president.html* template &mdash; it contains *the entire dictionary* for ONE president. That's the same as one complete row from the CSV.
 
 ### The detail page template
 
