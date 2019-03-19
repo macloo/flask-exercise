@@ -441,6 +441,6 @@ It is also possible to use other data sources to generate pages with Flask, incl
 
 This CSV method is quite handy for smaller apps, as CSV files are easy for most people to work with and can be exported from any spreadsheet application.
 
-The completed app is fully contained in the folder *final_app* in this repo. You can run *presidents.py* in that folder to see the final result, or just [view live version here](https://weimergeeks.com/flask_pres/).
+The completed app is fully contained in the folder *final_app* in this repo. You can change into that directory in Terminal and run *presidents.py* in that folder to see the final result, or just [view a live version here](https://weimergeeks.com/flask_pres/).
 
 .
