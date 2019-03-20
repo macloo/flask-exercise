@@ -10,6 +10,8 @@ In this exercise, we will work with a CSV file as our data source to create indi
 
 **4.** Our Flask app file is: *presidents.py* **Open it in Atom.**
 
+[These instructions are on a slide to show in the classroom.](https://docs.google.com/presentation/d/1mu6lJXmbhUe_UioRYCmdknVzviKqU3TPbCk3bETQGm8/edit?usp=sharing)
+
 A completed CSS file and 45 images have been provided in the *static* folder, which is where all such files (and JS files as well) must be for a Flask app to use them.
 
 Three mostly completed Flask template files are in the *templates* folder, also required for a Flask app that uses templates.
@@ -33,7 +35,7 @@ Three mostly completed Flask template files are in the *templates* folder, also 
 
 Our first task is to convert the CSV to a Python dictionary (or more accurately, a *list* of dictionaries).
 
-A function to do this has already been written. It is in the *modules.py* file. It requires the built-in Python module `csv`.
+A function to do this has already been written. It is in the *modules.py* file. It requires the built-in Python module `csv`. This script will work with *any* CSV file that has a header row.
 
 ```python
 import csv
@@ -78,6 +80,8 @@ presidents_list = convert_to_dict("presidents.csv")
 
 It is convenient to have `presidents_list` as a global variable so that we can use it in all of our Flask routes.
 
+This Python list, `presidents_list`, contains 45 dictionaries &mdash; one per president.
+
 ## Test the dictionary list in a Flask route
 
 The Flask app (*presidents.py*) already has one simple route:
@@ -100,7 +104,7 @@ def index():
 
 We know that `listname[0]` will return the value of the **first item** in a Python list. In our list of dictionaries, `presidents_list`, each item is a complete dictionary of information about one U.S. president.
 
-To access any item inside a dictionary, we use its **key**. Our keys in `presidents_list` include `'President'` and `'Birthplace'`. We **cannot** access the dictionary with `presidents_list['President']` because &mdash; remember &mdash; `presidents_list` is a LIST. So we access one item in the list and *then* the key inside that item: `presidents_list[0]['President']`.
+To access any item inside a dictionary, we use its **key**. Our keys in `presidents_list` include `'President'` and `'Birthplace'` (these key names came from the column headings in the CSV). We **cannot** access the dictionary with `presidents_list['President']` because &mdash; remember &mdash; `presidents_list` is a LIST. So we access one item in the list and *then* the key inside that item: `presidents_list[0]['President']`.
 
 **ACTION 4:** Save the edited *presidents.py* file and run it in Terminal (first, make sure your virtualenv is *activated*):
 
@@ -108,18 +112,18 @@ To access any item inside a dictionary, we use its **key**. Our keys in `preside
 python presidents.py
 ```
 
-In your web browser, type `localhost:5000/` in the address bar to launch the Flask web server &mdash; you will see the result of `@app.route('/')` (which is the function `index()`).
+That launches Flask's built-in local web server. In your web browser, type `localhost:5000/` in the address bar to launch the web server &mdash; you will see the result of `@app.route('/')` and its function, `index()`.
 
 If your browser displayed "Welcome to the presidential Flask example!" and "George Washington, born in Westmoreland County, Virginia." &mdash; you have verified that you can access `presidents_list` from a route function. Review the function above to ensure you understand how it worked, because we're about to change it further.
 
-You can view the CSV file (`presidents.csv`) as a lovely table here on GitHub and see all the presidential facts that are available to us.
+You can view the CSV file (`presidents.csv`) as a lovely table here on GitHub and see all the presidential facts that are available to us from `presidents_list`, our list of dictionaries.
 
 ## Create a directory page (a list of links)
 
 In our app, there will be two page types:
 
 * First, a **directory page** or index, listing all presidents by name, in the order of their presidency. Each name will be a link that opens a president's detail page.
-* Second, the **detail page.** This will have the same layout and information for each president.
+* Second, the **detail page.** This will have the same layout and information for each individual president.
 
 We will change the existing Flask route (`index()`) to create the directory page.
 
@@ -234,7 +238,7 @@ Previously, we had no loop. We had to specify *which* president (list item 0). N
 
 Now we have all the data we need for the directory page, but the *index.html* template must receive a list of pairs: `[(number, name),(number, name), ...]`. That will be our `pairs_list`.
 
-Here's how we make that ONE list of pairs from TWO lists (Python's built-in `zip()` function):
+Here's how we make that ONE list of pairs from TWO lists (using Python's built-in `zip()` function):
 
 ```python
 pairs_list = zip(ids_list, name_list)
@@ -242,7 +246,7 @@ pairs_list = zip(ids_list, name_list)
 
 **ACTION 8:** ADD that one line ABOVE the `return` statement.
 
-Because our CSV lists the presidents in order by their presidency, and we made a *list* of dictionaries from that CSV, we can be sure that they are in the order we want, starting at 1 and ending at 45. (If we needed to *sort* them, numerically or alphabetically, we would add another line of code here to do so.)
+Because our CSV lists the presidents in order by their presidency, and we made a *list* of dictionaries from that CSV, we can be sure that they are in the order we want, starting at 1 and ending at 45. (If we needed to *sort* them, numerically or alphabetically, we would add another line of code in the function to do so. [Learn how to sort.](https://docs.python.org/3/howto/sorting.html))
 
 The final route function:
 
@@ -321,6 +325,16 @@ A final note about template files, for now, is that the double curly braces cont
 
 While we're there (*index.html*), note that we will need to edit that HREF value. Comment text on lines 9-16 in the file tells you what to do &mdash; but not yet. Later.
 
+Some students asked why we have `pair[0]` and `pair[1]` above.
+
+1. `pairs` is a **list** of tuples.
+2. In the route function `index()`, we created `pairs_list` with the command: `pairs_list = zip(ids_list, name_list)`
+3. `pairs_list` is a list of pairs, like this: `[ ('1', 'George Washington'), ('2', 'John Adams'), ('3', 'Thomas Jefferson'), ... ]`
+4. We **passed** `pairs_list` to the template as the **value** of the variable `pairs` in the `return` statement at the end of the `index()` function.
+5. We **loop over** the list, `pairs`, and from *each* pair we extract the first value, `pair[0]`, and the second value, `pair[1]`.
+
+If you forgot what a tuple is, see "The Tuple Data Type" in [Sweigart's chapter 4](http://automatetheboringstuff.com/chapter4/).
+
 ## Create a detail page
 
 As already noted, our app will have two page types:
@@ -340,10 +354,12 @@ As already noted, our app will have two page types:
 2. A new function with a new name
 3. A second template in the *templates/* folder
 
-To create the detail pages, we must have a new route. The request to the web server must **match** the links we set up in our link list in the *index.html* template, because those links are what will open each detail page. To the browser, those links will look like this:
+To create the detail pages, we must have a new route. The request to the web server must **match** the links we set up in our link list in the *index.html* template, because those links will open each detail page. To the browser, those links will look like this:
 
 ```html
 <li><a href="/president/1">George Washington</a></li>
+...
+<li><a href="/president/44">Barack Obama</a></li>
 ```
 
 Therefore, the server request must be `/president/` followed by a number, which will be *different for each president.*
@@ -358,7 +374,7 @@ def detail(num):
 
 **ACTION 10:** INSERT that new route and function in *presidents.py*, BELOW the first route and function.
 
-The function `detail()` will take the number from the server request (sent when the user clicks a link on our directory page) as an *argument,* which we can use *in the function* to find the entire dictionary for that president:
+The function `detail()` will take the number from the server request (sent when the user clicks a link on our directory page) as an *argument,* `num`, which we can use *in the function* to find the entire dictionary for that president:
 
 ```python
 for president in presidents_list:
@@ -367,9 +383,11 @@ for president in presidents_list:
         break
 ```
 
+Note that `break` makes the loop quit. Once we find the single president indicated by `num`, we don't need to loop anymore.
+
 **ACTION 11:** INSERT that code ABOVE the `return` statement.
 
-(Alternatively, we could use just `pres_dict = presidents_list[int(num)-1]`. It would work fine for *this* data source. However, many data sources will NOT have such a handy correlation between a unique ID number and the list order, and a goal here is to make code that's easy to adapt for other projects you might do.)
+(Alternatively, we could use just `pres_dict = presidents_list[int(num)-1]`. It would work fine for *this* data source. However, many data sources will NOT have such a handy correlation between a unique ID *number* and the list order, and a goal here is to make code that's easy to adapt for other projects you might do.)
 
 Your new route now looks like this:
 
@@ -406,10 +424,10 @@ We must be fussy and *precise* about the **paths** we write into Flask template 
 * To the CSS file: `href="{{ url_for('static', filename='css/main.css') }}"` (in *base.html*)
 * To each detail page: `href="{{ url_for( 'detail', num=pair[0] ) }}"` (in *index.html*)
 * To the directory page: `href="{{ url_for('index') }}"` (in *president.html*)
-* To the image file for a given president: `src="{{ url_for('static', filename='images/'+pres['Image']) }}"` (in *president.html*)
-* To the Wikipedia page for a given president: `href="{{ pres['Wikipedia-entry'] }}"` (in *president.html*)
+* To the image file for a given president: `src="{{ url_for('static', filename='images/'+pres['Image']) }}"` (in *president.html*; `pres` is the template variable for the dictionary, so to get the value from the *Image* key in `pres` we write `pres['Image']`; we concatenate the image filename to its folder name, *images/*, with a plus sign)
+* To the Wikipedia page for a given president: `href="{{ pres['Wikipedia-entry'] }}"` (in *president.html*; `pres` is the template variable for the dictionary, so to get the value from the *Wikipedia-entry* key in `pres` we write `pres['Wikipedia-entry']`)
 
-**This list reveals one remaining problem we have not solved:** The links in *index.html* are going to **break** on a live server if we do not use the Flask/Jinja2 function `url_for()` &mdash; this is necessary for ALL links that lead anywhere **inside** the Flask app. ONLY the Wikipedia link is exempt, as it leads to an *external* site.
+**This list reveals one remaining problem we have not solved:** The links in *index.html* are going to **break** on a live server if we do not use the Flask/Jinja2 function `url_for()` &mdash; this is necessary for ALL links that lead anywhere **inside** the Flask app. ONLY the Wikipedia link is exempt, as it leads to an *external* site. We will fix that now.
 
 **ACTION 13:** Open the *index.html* template file and change this:
 
@@ -441,6 +459,6 @@ It is also possible to use other data sources to generate pages with Flask, incl
 
 This CSV method is quite handy for smaller apps, as CSV files are easy for most people to work with and can be exported from any spreadsheet application.
 
-The completed app is fully contained in the folder *final_app* in this repo. You can change into that directory in Terminal and run *presidents.py* in that folder to see the final result, or just [view a live version here](https://weimergeeks.com/flask_pres/).
+The completed app is fully contained in the folder *final_app* in this repo. You can change into that directory in Terminal and run *presidents.py* in that folder to see the final result, or just [view a complete live version here](https://weimergeeks.com/flask_pres/).
 
 .
