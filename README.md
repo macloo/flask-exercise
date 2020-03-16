@@ -1,5 +1,9 @@
 # A Flask exercise for beginners
 
+**IMPORTANT NOTE TO MY STUDENTS:** This exercise and all of its code have been replaced. Please see the [Flask Templates chapter](https://python-adv-web-apps.readthedocs.io/en/latest/flask3.html#) in the **Python Beginners** resource.
+
+## Get Started
+
 In this exercise, we will work with a CSV file as our data source to create individual pages for each of the 45 United States presidents. The CSV file is provided for you: *presidents.csv* (Open it above.)
 
 **1. DOWNLOAD THE ZIPPED VERSION OF THIS REPO to follow along in class.**
